@@ -1,23 +1,26 @@
 import React, { useState } from 'react'
+import {v4 as uuidv4} from 'uuid'
 
 const Invoice = () => {
 
-    const [value, setValues] = useState({ quantity: "", price: "", margin: "", discount: "", tax: "" })
-    const [datas, setDatas] = useState({})
+    const [value, setValues] = useState([])
+    const [datas, setDatas] = useState({id:uuidv4(), quantity: "", price: "", margin: "", discount: "", tax: "" })
 
     const change = (event) => {
-        setValues({ ...value, [event.target.name]: event.target.value })
+        setDatas({ ...datas, [event.target.name]: event.target.value })
     }
 
     const submit = async (event) => {
-        event.preventDefault();
-        try {
-           
+        event.preventsetDefault();
+  setValues([...value, {...datas}]);
+  console.log('hi')
+//   setDatas("");
 
+           var priceF = value.price*value.quantity;
+           var total=priceF+ ((value.margin/priceF)*100) - ((value.discount/priceF)*100) + ((value.tax/priceF)*10)
+console.log(total)
 
-        } catch (error) {
-            console.log(error)
-        }
+      
 
 
     }
@@ -25,7 +28,7 @@ const Invoice = () => {
 
     return (
         <div>Invoice
-            <form onChange={submit}   >
+            <form onSubmit={submit}   >
                 <label>Quantity</label><br />
                 <input type='number' name='quantity' onChange={change} /><br />
                 <label> Cost Price</label><br />
@@ -39,22 +42,7 @@ const Invoice = () => {
                 <input type='submit' /><br />
             </form>
 
-            <table>
-                <tr>
-                    <th>Quantity</th>
-                    <th>Cost Price</th>
-                    <th>Margin %</th>
-                    <th>Discount %</th>
-                    <th>Tax %</th>
-                    <th>Total</th>
-                </tr>
-                <td><input type='number' name='quantity' onChange={change} /><br /></td>
-                <td><input type='number' name='price' onChange={change} /><br /></td>
-                <td><input type='number' name='margin' onChange={change} /><br /></td>
-                <td><input type='number' name='discount' onChange={change} /><br /></td>
-                <td><input type='number' name='tax' onChange={change} /><br /></td>
-                <td><input disabled type='number' name='total' onChange={change} /><br /></td>
-            </table>
+           
 
 
 
